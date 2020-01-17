@@ -31,8 +31,8 @@ DependencyDetection.defer do
         end
 
         NewRelic::Agent::Datastores.wrap('Elasticsearch', resolver.operation_name, resolver.index, callback) do
-          @@major_version ||= ::Elasticsearch::Transport::VERSION.split('.')[0].to_i
-          if @@major_version > 5
+          @major_version ||= ::Elasticsearch::Transport::VERSION.split('.')[0].to_i
+          if @major_version > 5
             perform_request_without_new_relic(method, path, params, body, headers)
           else
             perform_request_without_new_relic(method, path, params, body)
